@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2015 at 09:16 PM
+-- Generation Time: Jul 15, 2015 at 02:52 AM
 -- Server version: 5.5.43-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.9
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `Crust` (
   `CrustId` int(50) NOT NULL AUTO_INCREMENT,
   `CrustType` varchar(255) NOT NULL,
+  `CrustCost` int(10) NOT NULL,
   PRIMARY KEY (`CrustId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -36,11 +37,11 @@ CREATE TABLE IF NOT EXISTS `Crust` (
 -- Dumping data for table `Crust`
 --
 
-INSERT INTO `Crust` (`CrustId`, `CrustType`) VALUES
-(1, 'Hand-tossed '),
-(2, 'Pan '),
-(3, 'Stuffed crust'),
-(4, 'Thin crust');
+INSERT INTO `Crust` (`CrustId`, `CrustType`, `CrustCost`) VALUES
+(1, 'Hand-tossed ', 0),
+(2, 'Pan ', 0),
+(3, 'Stuffed crust', 2),
+(4, 'Thin crust', 0);
 
 -- --------------------------------------------------------
 
@@ -49,18 +50,24 @@ INSERT INTO `Crust` (`CrustId`, `CrustType`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `Order` (
-  `OrderId` int(50) NOT NULL AUTO_INCREMENT,
+  `OrderId` int(50) NOT NULL,
   `UserId` int(50) NOT NULL,
   `CrustId` int(50) NOT NULL,
   `SizeId` int(50) NOT NULL,
-  `OrderToppingId` int(50) NOT NULL,
   `Cost` varchar(100) NOT NULL,
   `DateOrdered` datetime NOT NULL,
   `NumberOfPizzas` int(50) NOT NULL,
   `IsOrderCompleted` tinyint(1) NOT NULL,
   `TaxId` int(50) NOT NULL,
   PRIMARY KEY (`OrderId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Order`
+--
+
+INSERT INTO `Order` (`OrderId`, `UserId`, `CrustId`, `SizeId`, `Cost`, `DateOrdered`, `NumberOfPizzas`, `IsOrderCompleted`, `TaxId`) VALUES
+(338691863, 2103348892, 3, 1, '9.35', '2015-07-15 02:10:27', 1, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -73,7 +80,21 @@ CREATE TABLE IF NOT EXISTS `OrderTopping` (
   `OrderId` int(50) NOT NULL,
   `ToppingId` int(50) NOT NULL,
   PRIMARY KEY (`OrderToppingId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+
+--
+-- Dumping data for table `OrderTopping`
+--
+
+INSERT INTO `OrderTopping` (`OrderToppingId`, `OrderId`, `ToppingId`) VALUES
+(1, 1828600631, 1),
+(2, 1828600631, 2),
+(3, 1828600631, 8),
+(4, 1828600631, 9),
+(45, 338691863, 1),
+(46, 338691863, 2),
+(47, 338691863, 8),
+(48, 338691863, 9);
 
 -- --------------------------------------------------------
 
@@ -93,7 +114,15 @@ CREATE TABLE IF NOT EXISTS `PersonalInfo` (
   `Telephone` varchar(20) NOT NULL,
   `EmailId` varchar(100) NOT NULL,
   PRIMARY KEY (`UserId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2103348893 ;
+
+--
+-- Dumping data for table `PersonalInfo`
+--
+
+INSERT INTO `PersonalInfo` (`UserId`, `DateCreated`, `FirstName`, `LastName`, `Address`, `City`, `ProvinceId`, `PostalCode`, `Telephone`, `EmailId`) VALUES
+(1464535598, '0000-00-00 00:00:00', 'Rana', 'Singh', 'Apartment Building', 'KITCHENER', 3, 'N2P1Z4', '2267921424', 'jaskaransandhu91@gmail.com'),
+(2103348892, '0000-00-00 00:00:00', 'Rana', 'Singh', 'Apartment Building', 'KITCHENER', 3, 'N2P1Z4', '2267921424', 'jaskaransandhu91@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -126,6 +155,7 @@ INSERT INTO `Province` (`ProvinceId`, `ProvinceName`) VALUES
 CREATE TABLE IF NOT EXISTS `Size` (
   `SizeId` int(255) NOT NULL AUTO_INCREMENT,
   `SizeType` varchar(255) NOT NULL,
+  `SizeCost` int(10) NOT NULL,
   PRIMARY KEY (`SizeId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -133,11 +163,11 @@ CREATE TABLE IF NOT EXISTS `Size` (
 -- Dumping data for table `Size`
 --
 
-INSERT INTO `Size` (`SizeId`, `SizeType`) VALUES
-(1, 'Small'),
-(2, 'Medium'),
-(3, 'Large'),
-(4, 'Extra Large');
+INSERT INTO `Size` (`SizeId`, `SizeType`, `SizeCost`) VALUES
+(1, 'Small', 5),
+(2, 'Medium', 10),
+(3, 'Large', 15),
+(4, 'Extra Large', 20);
 
 -- --------------------------------------------------------
 
